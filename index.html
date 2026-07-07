@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<title>Rotina do Casal</title>
+
+<link rel="apple-touch-icon" sizes="512x512" href="apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="64x64" href="favicon-64.png">
+<link rel="icon" type="image/png" sizes="32x32" href="favicon-32.png">
+<link rel="shortcut icon" href="favicon-32.png">
+<meta property="og:title" content="Rotina do Casal">
+<meta property="og:image" content="https://tarcisiogb.github.io/rotina-casal/og-image.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@600;700;800&family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,600;9..40,700&display=swap" rel="stylesheet">
+
+<style>
+:root {
+  --bg:#F5EFE3;
+  --card:#FFFDF8;
+  --primary:#9C7A54;
+  --primary-x:#F0E4CE;
+  --amber:#E76F28;
+  --amber-l:#FFF0E6;
+  --red:#C0392B;
+  --red-l:#FDE8E8;
+  --tarcisio:#1A6B9A;
+  --tarcisio-l:#E8F4FD;
+  --aline:#C2185B;
+  --aline-l:#FCE4EC;
+  --txt:#3A2E22;
+  --muted:#7A6A55;
+  --border:#E2D5BC;
+  --green-x:#D8F3DC;
+  --yellow-l:#FFFBEA;
+}
+* { box-sizing:border-box; -webkit-tap-highlight-color:transparent; }
+body {
+  margin:0; background:var(--bg); color:var(--txt);
+  font-family:'DM Sans', sans-serif; padding-bottom:40px;
+}
+h1,h2,h3,.serif { font-family:'Poppins', sans-serif; font-weight:700; letter-spacing:-0.3px; }
+#loginScreen {
+  min-height:100vh; display:flex; flex-direction:column; align-items:center; justify-content:center;
+  text-align:center; padding:24px; background:linear-gradient(160deg,var(--primary-x),var(--bg));
+}
+#loginScreen h1 { font-size:32px; color:var(--primary); margin-bottom:6px; }
+#loginScreen p { color:var(--muted); margin-bottom:28px; }
+.btn-google {
+  background:#fff; border:1px solid var(--border); border-radius:12px; padding:14px 24px;
+  font-family:'DM Sans'; font-size:16px; font-weight:600; cursor:pointer; box-shadow:0 2px 8px rgba(0,0,0,.06);
+}
+#appHeader { position:sticky; top:0; z-index:20; }
+.topbar { background:var(--primary); color:#fff; padding:16px 16px 14px; }
+.topbar-row { display:flex; justify-content:space-between; align-items:center; }
+.topbar h1 { font-size:22px; margin:0; display:flex; align-items:center; gap:8px; }
+.topbar-sub { font-size:12px; opacity:.85; margin-top:2px; }
+.badges-row { display:flex; gap:6px; margin-top:8px; flex-wrap:wrap; }
+.badge { font-size:11px; padding:4px 9px; border-radius:20px; font-weight:600; }
+.badge-fertil { background:#FEF9C3; color:#7A5C00; }
+.badge-tpm { background:#DDD6FE; color:#4C2E96; }
+.badge-periodo { background:#FECDD3; color:#9A1E33; }
+.btn-signout { background:rgba(255,255,255,.15); color:#fff; border:none; border-radius:8px; padding:8px 12px; font-size:12px; font-family:'DM Sans'; }
+.tabs { display:flex; overflow-x:auto; gap:6px; padding:10px 12px; background:#fff; border-bottom:1px solid var(--border); -webkit-overflow-scrolling:touch; }
+.tabs::-webkit-scrollbar{ display:none; }
+.tab { flex:0 0 auto; padding:8px 12px; border-radius:20px; font-size:13px; font-weight:600; color:var(--muted); background:var(--bg); cursor:pointer; white-space:nowrap; }
+.tab.on { background:var(--primary); color:#fff; }
+.sec { display:none; padding:16px; max-width:640px; margin:0 auto; }
+.sec.on { display:block; }
+.card { background:var(--card); border:1px solid var(--border); border-radius:14px; padding:16px; margin-bottom:14px; }
+.card-title { font-family:'Poppins', sans-serif; font-weight:700; font-size:15px; margin-bottom:2px; }
+.card-sub { color:var(--muted); font-size:12px; margin-bottom:12px; }
+.field { margin-bottom:12px; }
+.field label { display:block; font-size:12px; color:var(--muted); margin-bottom:5px; font-weight:600; }
+.input, select.input, textarea.input {
+  width:100%; padding:10px 12px; border:1px solid var(--border); border-radius:10px;
+  font-family:'DM Sans'; font-size:14px; background:#fff; color:var(--txt); box-sizing:border-box; min-width:0;
+}
+textarea.input { resize:vertical; min-height:50px; }
+.row2 { display:flex; gap:10px; flex-wrap:wrap; }
+.row2 > div { flex:1 1 140px; min-width:140px; }
+input[type="time"], input[type="date"] { min-width:0; }
+.quem-pick, .pill-row { display:flex; flex-wrap:wrap; gap:8px; }
+.quem-btn, .tipo-pill {
+  border:1px solid var(--border); background:#fff; border-radius:20px; padding:8px 14px;
+  font-size:13px; font-weight:600; color:var(--muted); cursor:pointer; font-family:'DM Sans';
+}
+.quem-btn.on.q-tarcisio { background:var(--tarcisio-l); border-color:var(--tarcisio); color:var(--tarcisio); }
+.quem-btn.on.q-aline { background:var(--aline-l); border-color:var(--aline); color:var(--aline); }
+.quem-btn.on.q-juntos { background:var(--primary-x); border-color:var(--primary); color:var(--primary); }
+.tipo-pill.on { background:var(--primary-x); border-color:var(--primary); color:var(--primary); }
+.btn { border:none; border-radius:10px; padding:11px 18px; font-family:'DM Sans'; font-weight:700; font-size:14px; cursor:pointer; }
+.btn-primary { background:var(--primary); color:#fff; width:100%; }
+.btn-ghost { background:var(--bg); color:var(--txt); }
+.btn-danger { background:var(--red-l); color:var(--red); }
+.list-item { border-bottom:1px solid var(--border); padding:10px 0; display:flex; justify-content:space-between; align-items:flex-start; gap:8px; }
+.list-item:last-child { border-bottom:none; }
+.li-main { font-size:14px; font-weight:600; }
+.li-sub { font-size:12px; color:var(--muted); margin-top:2px; }
+.li-actions { display:flex; gap:6px; flex-shrink:0; }
+.li-actions button { border:none; background:var(--bg); border-radius:8px; padding:5px 8px; font-size:12px; cursor:pointer; }
+.stat-grid { display:grid; grid-template-columns:1fr 1fr; gap:10px; }
+.stat-box { background:var(--bg); border-radius:10px; padding:10px 12px; }
+.stat-box .num { font-size:20px; font-weight:700; }
+.stat-box .lbl { font-size:11px; color:var(--muted); }
+.modal-bg { display:none; position:fixed; inset:0; background:rgba(0,0,0,.4); z-index:50; align-items:flex-end; justify-content:center; }
+.modal-bg.on { display:flex; }
+.modal { background:#fff; border-radius:20px 20px 0 0; padding:20px; width:100%; max-width:640px; max-height:85vh; overflow-y:auto; position:relative; }
+.modal-close { position:absolute; top:14px; right:16px; border:none; background:var(--bg); border-radius:50%; width:28px; height:28px; }
+.modal-title { font-weight:700; font-size:16px; margin-bottom:14px; }
+table.tbl { width:100%; border-collapse:collapse; font-size:12px; }
+table.tbl th, table.tbl td { padding:7px 6px; text-align:left; border-bottom:1px solid var(--border); }
+table.tbl th { color:var(--muted); font-weight:600; font-size:11px; }
+.best { color:#2D6A4F; font-weight:700; }
+.worst { color:var(--red); font-weight:700; }
+.cal-grid { display:grid; grid-template-columns:repeat(7,1fr); gap:3px; margin-top:10px; }
+.cal-day { aspect-ratio:1; border-radius:8px; display:flex; align-items:center; justify-content:center; font-size:11px; font-weight:600; }
+.cal-day.today { outline:2px solid var(--primary); outline-offset:1px; }
+.legend { display:flex; flex-wrap:wrap; gap:8px; margin-top:10px; font-size:11px; }
+.legend span { display:flex; align-items:center; gap:4px; }
+.legend i { width:11px; height:11px; border-radius:3px; display:inline-block; }
+.period-pick { display:flex; gap:6px; margin-bottom:14px; flex-wrap:wrap; }
+.period-pick button { flex:1; border:1px solid var(--border); background:#fff; border-radius:10px; padding:8px; font-size:12px; font-weight:600; }
+.period-pick button.on { background:var(--primary); color:#fff; border-color:var(--primary); }
+.ai-box { background:var(--primary-x); border-radius:12px; padding:14px; font-size:13px; line-height:1.6; white-space:pre-wrap; }
+.hidden { display:none !important; }
+.discreet-note { font-size:11px; color:var(--muted); font-style:italic; margin-top:2px; }
+</style>
+</head>
+<body>
+
+<div id="loginScreen">
+  <h1 style="display:flex;align-items:center;justify-content:center;gap:10px;">Rotina do Casal <svg width="30" height="30" viewBox="0 0 100 100"><circle cx="38" cy="50" r="26" fill="none" stroke="#8FD0F0" stroke-width="9"/><circle cx="62" cy="50" r="26" fill="none" stroke="#FF9FC7" stroke-width="9"/></svg></h1>
+  <p>Tarcísio &amp; Aline</p>
+  <button class="btn-google" onclick="signIn()">Entrar com Google</button>
+  <div id="login-erro" style="display:none;margin-top:14px;background:#FDE8E8;border-radius:8px;padding:10px 12px;font-size:13px;color:#C0392B;">
+    ⛔ Acesso restrito. Esta aplicação é privada.
+  </div>
+</div>
+
+<div id="appScreen" style="display:none;">
+ <div id="appHeader">
+  <div class="topbar">
+    <div class="topbar-row">
+      <div>
+        <h1>Rotina do Casal <svg width="22" height="22" viewBox="0 0 100 100" style="flex-shrink:0;"><circle cx="38" cy="50" r="26" fill="none" stroke="#8FD0F0" stroke-width="9"/><circle cx="62" cy="50" r="26" fill="none" stroke="#FF9FC7" stroke-width="9"/></svg></h1>
+        <div class="topbar-sub" id="topbarSub">—</div>
+      </div>
+      <button class="btn-signout" onclick="signOutApp()">Sair</button>
+    </div>
+    <div class="badges-row" id="topBadges"></div>
+  </div>
+
+  <div class="tabs" id="tabsRow">
+    <div class="tab on" onclick="tab('sono',this)">😴 Sono</div>
+    <div class="tab" onclick="tab('treino',this)">🏃 Treino</div>
+    <div class="tab" onclick="tab('juntos',this)">🎉 Lazer</div>
+    <div class="tab" onclick="tab('intimidade',this)">❤️ Intimidade</div>
+    <div class="tab" onclick="tab('biblia',this)">📖 Bíblia</div>
+    <div class="tab" onclick="tab('saude',this)">🏥 Saúde</div>
+    <div class="tab" onclick="tab('ciclo',this)">🌸 Ciclo</div>
+    <div class="tab" onclick="tab('alcool',this)">🍺 Álcool</div>
+    <div class="tab" onclick="tab('comparativo',this)">📊 Comparativo</div>
+    <div class="tab" onclick="tab('insights',this)">🔍 Insights</div>
+    <div class="tab" onclick="tab('resumo',this)">✨ Resumo IA</div>
+  </div>
+ </div>
+
+  <div id="sec-sono" class="sec on"></div>
+  <div id="sec-treino" class="sec"></div>
+  <div id="sec-juntos" class="sec"></div>
+  <div id="sec-intimidade" class="sec"></div>
+  <div id="sec-biblia" class="sec"></div>
+  <div id="sec-saude" class="sec"></div>
+  <div id="sec-ciclo" class="sec"></div>
+  <div id="sec-alcool" class="sec"></div>
+  <div id="sec-comparativo" class="sec"></div>
+  <div id="sec-insights" class="sec"></div>
+  <div id="sec-resumo" class="sec"></div>
+</div>
+
+<div class="modal-bg" id="modal-remedio">
+  <div class="modal">
+    <button class="modal-close" onclick="fecharModal('modal-remedio')">✕</button>
+    <div class="modal-title">Adicionar remédio</div>
+    <div class="field"><label>Nome</label><input class="input" id="remNome"></div>
+    <div class="row2">
+      <div class="field"><label>Dose</label><input class="input" id="remDose"></div>
+      <div class="field"><label>Horário</label><input class="input" type="time" id="remHorario"></div>
+    </div>
+    <div class="field"><label>Duração do tratamento (dias)</label><input class="input" type="number" id="remDuracao"></div>
+    <button class="btn btn-primary" onclick="salvarRemedio()">Salvar remédio</button>
+  </div>
+</div>
+
+<script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+import { getAuth, GoogleAuthProvider, signInWithPopup, signOut, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+import { getFirestore, doc, getDoc, setDoc, onSnapshot } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+
+const firebaseConfig = {
+  apiKey: "AIzaSyB-k_uudfmykfo1ETFBaG9tTnQDde3QVD4",
+  authDomain: "rotina-casal.firebaseapp.com",
+  projectId: "rotina-casal",
+  storageBucket: "rotina-casal.firebasestorage.app",
+  messagingSenderId: "595640826786",
+  appId: "1:595640826786:web:a37c63d3ec9f832dacd0fb"
+};
+
+const fbApp = initializeApp(firebaseConfig);
+const auth = getAuth(fbApp);
+const db = getFirestore(fbApp);
+const provider = new GoogleAuthProvider();
+
+window.FUNCTION_URL_RESUMO = "https://southamerica-east1-rotina-casal.cloudfunctions.net/gerarResumo";
+window.FUNCTION_URL_INSIGHTS = "https://southamerica-east1-rotina-casal.cloudfunctions.net/gerarInsights";
+
+window.signIn = function () {
+  signInWithPopup(auth, provider).catch(function (e) { alert("Erro no login: " + e.message); });
+};
+window.signOutApp = function () {
+  signOut(auth);
+};
+
+const STATE_REF = doc(db, "familias", "rotina-casal", "dados", "estado");
+
+window._getIdToken = async function () {
+  if (!auth.currentUser) return null;
+  return await auth.currentUser.getIdToken();
+};
+
+window.saveState = async function () {
+  try {
+    await setDoc(STATE_REF, window.ST, { merge: true });
+  } catch (e) {
+    console.error("Erro ao salvar:", e);
+    alert("Erro ao salvar dados. Verifique sua conexão.");
+  }
+};
+
+function defaultState() {
+  return {
+    tarcisio: { sono: [], treinos: [], doencas: [], alcool: [] },
+    aline: { sono: [], treinos: [], doencas: [], alcool: [], ciclos: [] },
+    juntos: { momentos: [] },
+    intimidade: { encontros: [] },
+    biblia: { leituras: [] },
+    resumos: [],
+    insights: []
+  };
+}
+
+function mergeDefaults(data) {
+  var d = data || {};
+  var def = defaultState();
+  d.tarcisio = d.tarcisio || {};
+  d.aline = d.aline || {};
+  d.juntos = d.juntos || {};
+  d.intimidade = d.intimidade || {};
+  d.biblia = d.biblia || {};
+  d.tarcisio.sono = d.tarcisio.sono || [];
+  d.tarcisio.treinos = d.tarcisio.treinos || [];
+  d.tarcisio.doencas = d.tarcisio.doencas || [];
+  d.tarcisio.alcool = d.tarcisio.alcool || [];
+  d.aline.sono = d.aline.sono || [];
+  d.aline.treinos = d.aline.treinos || [];
+  d.aline.doencas = d.aline.doencas || [];
+  d.aline.alcool = d.aline.alcool || [];
+  d.aline.ciclos = d.aline.ciclos || [];
+  d.juntos.momentos = d.juntos.momentos || [];
+  d.intimidade.encontros = d.intimidade.encontros || [];
+  d.biblia.leituras = d.biblia.leituras || [];
+  d.resumos = d.resumos || [];
+  d.insights = d.insights || [];
+  return d;
+}
+
+const EMAILS_AUTORIZADOS = ['tarcisiogb@gmail.com', 'aosantanna@gmail.com'];
+
+onAuthStateChanged(auth, async function (user) {
+  if (!user) {
+    document.getElementById("loginScreen").style.display = "flex";
+    document.getElementById("appScreen").style.display = "none";
+    document.getElementById("login-erro").style.display = "none";
+    return;
+  }
+  // Bloquear e-mails não autorizados
+  if (EMAILS_AUTORIZADOS.indexOf(user.email) === -1) {
+    await signOut(auth);
+    document.getElementById("loginScreen").style.display = "flex";
+    document.getElementById("appScreen").style.display = "none";
+    document.getElementById("login-erro").style.display = "block";
+    return;
+  }
+  document.getElementById("login-erro").style.display = "none";
+  window._userName = (user.displayName || "").indexOf("Aline") > -1 ? "Aline" : "Tarcísio";
+  window._userEmail = user.email;
+  document.getElementById("loginScreen").style.display = "none";
+  document.getElementById("appScreen").style.display = "block";
+  onSnapshot(STATE_REF, function (snap) {
+    window.ST = mergeDefaults(snap.exists() ? snap.data() : null);
+    if (window.renderAll) window.renderAll();
+  }, function (err) {
+    console.error("Erro no snapshot:", err);
+  });
+});
+</script>
+
+<script src="app.js"></script>
+</body>
+</html>
