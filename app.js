@@ -3502,3 +3502,4 @@ function renderPerformanceCorridaCard() {
   html += '</div>';
   return html;
 }
+  
